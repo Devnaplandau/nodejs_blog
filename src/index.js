@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const { engine } = require("express-handlebars");
 const app = express();
 const port = 3000;
-
+const route = require("./routes");
 // cú pháp chèn ảnh
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
@@ -15,7 +15,6 @@ app.use(
 app.use(express.json());
 // http logger
 // app.use(morgan("combined"));
-
 // template Engine
 app.engine(
   "hbs",
@@ -26,19 +25,9 @@ app.engine(
 app.set("view engine", "hbs");
 // xử lí đường dẫn đến page views
 app.set("views", path.join(__dirname, "resources/views"));
-app.get("/", (req, res) => {
-  res.render("home");
-});
-app.get("/news", (req, res) => {
-  res.render("news");
-});
-app.get("/search", (req, res) => {
-  res.render("search");
-});
-app.post("/search", (req, res) => {
-  console.log(req.body);
-  res.send("");
-});
+// Route Init
+route(app);
+// ====================================== //
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
